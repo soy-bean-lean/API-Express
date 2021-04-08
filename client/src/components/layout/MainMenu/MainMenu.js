@@ -7,7 +7,8 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink  } from 'reactstrap';
+  NavLink
+} from 'reactstrap';
 
 class MainMenu extends React.Component {
 
