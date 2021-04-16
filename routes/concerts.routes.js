@@ -1,25 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../db.js');
+const ConcertsController = require('../controllers/concerts.controllers.js');
 
-router.route('/concerts').get((req, res) => {
-  res.json(db.concerts);
-});
+router.get('/concert', ConcertsController.getAll);
 
-router.route('/concerts/:id').get((req, res) => {
-  res.json(db.concerts[req.params.id - 1]);
-});
+router.get('/concert/random', ConcertsController.getRandom);
 
-router.route('/concerts').post((req, res) => {
-  res.json({ message: 'ok' });
-});
+router.get('/concert/:id', ConcertsController.getId);
 
-router.route('/concerts/:id').delete((req, res) => {
-  res.json({ message: 'ok' });
-});
+router.post('/concert', ConcertsController.post);
 
-router.route('/concerts/:id').put((req, res) => {
-  res.json({ message: 'ok' });
-});
+router.put('/concert/:id', ConcertsController.put);
+
+router.delete('/concert/:id', ConcertsController.delete);
 
 module.exports = router;
