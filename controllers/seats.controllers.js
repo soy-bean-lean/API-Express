@@ -5,7 +5,7 @@ exports.getAll = async (req, res) => {
   try {
     res.json(await Seats.find());
   }
-  catch(err) {
+  catch (err) {
     res.status(500).json({ message: err });
   }
 };
@@ -13,17 +13,17 @@ exports.getAll = async (req, res) => {
 exports.getId = async (req, res) => {
   try {
     const seat = await Seats.findById(req.params.id);
-    if(!seat) res.status(404).json({ message: 'Not found' });
+    if (!seat) res.status(404).json({ message: 'Not found' });
     else res.json(seat);
   }
-  catch(err) {
+  catch (err) {
     res.status(500).json({ message: err });
   }
 };
 
 exports.post = async (req, res) => {
   try {
-    const {client, seat, email, day}  = req.body;
+    const { client, seat, email, day } = req.body;
     const newSeat = new Seats({
       id: uniqid(),
       client: client,
@@ -34,40 +34,39 @@ exports.post = async (req, res) => {
     await newSeat.save();
     res.json(newSeat);
   }
-  catch(err) {
+  catch (err) {
     res.status(500).json({ message: err });
   }
 };
 
 exports.put = async (req, res) => {
-  const { day, seat, client, email } = req.body;  try {
-    const seat = await(Seats.findById(req.params.id));
-    if(seat) {
+  const { day, seat, client, email } = req.body; try {
+    const seat = await (Seats.findById(req.params.id));
+    if (seat) {
       seat.day = day;
       seat.seat = seat,
-      seat.client = client;
+        seat.client = client;
       seat.email = email;
       await seat.save();
       res.json(seat);
     }
     else res.status(404).json({ message: 'Not found...' });
   }
-  catch(err) {
+  catch (err) {
     res.status(500).json({ message: err });
   }
 };
 
-
 exports.delete = async (req, res) => {
   try {
-    const seat = await(Seats.findById(req.params.id));
-    if(seat) {
+    const seat = await (Seats.findById(req.params.id));
+    if (seat) {
       await Seats.deleteOne({ _id: req.params.id });
       res.json(seat);
     }
     else res.status(404).json({ message: 'Not found...' });
   }
-  catch(err) {
+  catch (err) {
     res.status(500).json({ message: err });
   }
 };
