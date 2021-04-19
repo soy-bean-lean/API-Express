@@ -1,5 +1,6 @@
 const Seats = require('../models/seats.models');
 const uniqid = require('uniqid');
+sanitize = require('mongo-sanitize');
 
 exports.getAll = async (req, res) => {
   try {
@@ -23,13 +24,14 @@ exports.getId = async (req, res) => {
 
 exports.post = async (req, res) => {
   try {
-    const { client, seat, email, day } = req.body;
+    const clean = sanitize(req.body);
+    const { client, seat, email, day } = clean;
     const newSeat = new Seats({
       id: uniqid(),
-      client: client,
-      seat: seat,
-      email: email,
-      day: day,
+      client,
+      seat,
+      email,
+      day,
     });
     await newSeat.save();
     res.json(newSeat);
